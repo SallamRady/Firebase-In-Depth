@@ -4,6 +4,7 @@ import { useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/firebase.config";
 import { Button } from "@mui/material";
+import NotesPanel from "./Notes/page";
 
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -35,10 +36,10 @@ export default function Home() {
   return (
     <main className={styles.main}>
       {loggedIn ? "User is Logged In" : "User Is Looged out"}
-
       <Button variant="contained" color="error" onClick={() => handleLogout()}>
         Log out
       </Button>
+      <NotesPanel />
     </main>
   );
 }
