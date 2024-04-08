@@ -13,11 +13,13 @@ import { useRouter } from "next/navigation";
 export default function login() {
   const [phone, setPhone] = useState("");
   const [otp, setOTP] = useState("");
+  const [code, setCode] = useState("");
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [otpSend, setOtpSend] = useState(false);
   const navigator = useRouter();
   let auth = getAuth(app);
 
+  //# Try 1 - it's successfully
   //TODO::1.setup recaptcha
   useEffect(() => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -64,6 +66,46 @@ export default function login() {
     }
   };
 
+  // Try 2
+  // //TODO::1.setup recaptcha
+  // useEffect(() => {
+  //   console.log("setup recaptcha");
+  //   window.recaptchaVerifier = new RecaptchaVerifier(auth, "sign-in-button", {
+  //     size: "invisible",
+  //     callback: (response) => {
+  //       // reCAPTCHA solved, allow signInWithPhoneNumber.
+  //       console.log("Asd onSignInSubmit")
+  //       onSignInSubmit();
+  //     },
+  //   });
+  // }, []);
+
+  // //TODO::2.handleSendOTP
+  // const onSignInSubmit = () => {
+  //   console.log("2.handleSendOTP", window.recaptchaVerifier);
+  //   signInWithPhoneNumber(auth, "+201125913093", window.recaptchaVerifier)
+  //     .then((confirmationResult) => {
+  //       window.confirmationResult = confirmationResult;
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error in send Msg::", error);
+  //     });
+  // };
+
+  // //confiem code
+  // const confirmCode = () => {
+  //   console.log("Code109", code);
+  //   confirmationResult
+  //     .confirm(code)
+  //     .then((result) => {
+  //       const user = result.user;
+  //       console.log("User signed in successfully.", user);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error in confirmCode Msg::", error);
+  //     });
+  // };
+
   return (
     <div>
       <Container fluid="sm" className="mt-3">
@@ -107,6 +149,23 @@ export default function login() {
             </Row>
           </>
         )}
+        <hr />
+        <hr />
+        <div>
+          <h2>Try 2</h2>
+          <Form.Group>
+            <Form.Control
+              type="text"
+              name="mobile"
+              placeholder="Code"
+              onChange={(e) => setCode(e.target.value)}
+              required
+            />
+          </Form.Group>
+          <button onClick={() => confirmCode()} id="sign-in-button">
+            Send Code
+          </button>
+        </div>
       </Container>
     </div>
   );
